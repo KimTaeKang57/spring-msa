@@ -4,9 +4,10 @@ import com.example.userservice.dto.UserRequest;
 import com.example.userservice.dto.UserResponse;
 import com.example.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -14,13 +15,39 @@ public class UserController {
 
     private final UserService userService;
 
+    /**
+     * 회원가입
+     */
     @PostMapping("/sign")
-    public UserResponse sign(@RequestBody UserRequest userRequest){
-        return userService.sign(userRequest);
+    public ResponseEntity<UserResponse> sign(@RequestBody UserRequest userRequest) {
+        UserResponse sign = userService.sign(userRequest);
+        return ResponseEntity.ok(sign);
     }
 
+    /**
+     * 로그인
+     */
     @PostMapping("/login")
-    public UserResponse login(@RequestBody UserRequest userRequest) {
-        return userService.login(userRequest);
+    public ResponseEntity<UserResponse> login(@RequestBody UserRequest userRequest) {
+        UserResponse login = userService.login(userRequest);
+        return ResponseEntity.ok(login);
+    }
+
+    /**
+     * 전체 사용자 조회
+     */
+    @GetMapping("/users")
+    public ResponseEntity<?> getAllUser(){
+        List<UserResponse> allUser = userService.getAllUser();
+        return ResponseEntity.ok(allUser);
+    }
+
+    /**
+     * 사용자 정보, 주문 내역 조회
+     */
+    @GetMapping("/users/{user_Id}")
+    public ResponseEntity<?> getUser(@PathVariable("user_Id") Long userId) {
+        UserResponse user = userService.getUser(userId);
+        return ResponseEntity.ok(user);
     }
 }

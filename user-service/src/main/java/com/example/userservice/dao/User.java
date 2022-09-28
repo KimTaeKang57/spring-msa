@@ -15,6 +15,7 @@ public class User {
     @GeneratedValue
     @Column(name = "user_id")
     private Long id;
+
     @Column(name = "user_userId")
     private String userId;
     @Column(name = "user_passwd")
