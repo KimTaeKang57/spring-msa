@@ -14,8 +14,10 @@ spring:
     gateway:
       routes:
         - id: user-service
-#          uri: lb://USER-SERVICE
-          uri: http://localhost:9001/
+          uri: lb://USER-SERVICE
           predicates:
             - Path=/user-service/**
-
+        - id: catalog-service
+          uri: lb://CATALOG-SERVICE
+          predicates:
+              - Path=/catalog-service/**
