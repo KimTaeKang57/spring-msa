@@ -5,18 +5,17 @@ import com.example.userservice.dao.User;
 import com.example.userservice.dto.OrderResponse;
 import com.example.userservice.dto.UserRequest;
 import com.example.userservice.dto.UserResponse;
+import com.example.userservice.error.FeignErrorDecoder;
 import com.example.userservice.jpa.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -26,6 +25,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final OrderServiceClient orderServiceClient;
+    private final FeignErrorDecoder feignErrorDecoder;
 
     @Override
     public UserResponse sign(UserRequest userRequest) {
@@ -88,12 +88,16 @@ public class UserServiceImpl implements UserService {
     public UserResponse getUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(NullPointerException::new);
         /* Using a feign client*/
-        List<OrderResponse> orders =  null;
-        try {
-            orders = orderServiceClient.getOrderByUserId(userId);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
+//        List<OrderResponse> orders =  null;
+//        try {
+//            orders = orderServiceClient.getOrderByUserId(userId);
+//        } catch (Exception e) {
+//            log.error(e.getMessage());
+//        }
+        
+        /* Using ErrorDecoder */
+        List<OrderResponse> orders = orderServiceClient.getOrderByUserId(userId);
+
         return UserResponse.builder()
                 .userId(user.getUserId())
                 .passwd(user.getPasswd())
