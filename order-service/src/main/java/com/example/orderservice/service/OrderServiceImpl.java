@@ -1,5 +1,6 @@
 package com.example.orderservice.service;
 
+import com.example.orderservice.client.CatalogServiceClient;
 import com.example.orderservice.dao.Order;
 import com.example.orderservice.dto.OrderRequest;
 import com.example.orderservice.dto.OrderResponse;
@@ -14,8 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 public class OrderServiceImpl implements OrderService {
-
     private final OrderRepository orderRepository;
+    private final CatalogServiceClient catalogServiceClient;
 
     @Override
     public OrderResponse createOrder(Long userId, OrderRequest orderRequest) {
@@ -27,6 +28,8 @@ public class OrderServiceImpl implements OrderService {
                 .createAt(LocalDateTime.now())
                 .userId(userId)
                 .build());
+
+        catalogServiceClient.buyCatalog(orderRequest.getProductId(), orderRequest.getQty());
 
         return OrderResponse.builder()
                 .productId(order.getProductId())
