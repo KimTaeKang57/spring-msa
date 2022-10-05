@@ -1,11 +1,13 @@
 package com.example.userservice.service;
 
+import com.example.userservice.client.OrderServiceClient;
 import com.example.userservice.dao.User;
 import com.example.userservice.dto.OrderResponse;
 import com.example.userservice.dto.UserRequest;
 import com.example.userservice.dto.UserResponse;
 import com.example.userservice.jpa.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,11 +19,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final OrderServiceClient orderServiceClient;
 
     @Override
     public UserResponse sign(UserRequest userRequest) {
@@ -83,8 +87,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse getUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(NullPointerException::new);
-        List<OrderResponse> orders = new ArrayList<>();
-
+        /* Using a feign client*/
+        List<OrderResponse> orders =  null;
+        try {
+            orders = orderServiceClient.getOrderByUserId(userId);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
         return UserResponse.builder()
                 .userId(user.getUserId())
                 .passwd(user.getPasswd())
