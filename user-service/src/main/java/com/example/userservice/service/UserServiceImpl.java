@@ -9,6 +9,7 @@ import com.example.userservice.error.FeignErrorDecoder;
 import com.example.userservice.jpa.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -87,14 +88,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse getUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(NullPointerException::new);
-        /* Using a feign client*/
+        /* Using a feign client + FeignErrorDecoder */
 //        List<OrderResponse> orders =  null;
 //        try {
 //            orders = orderServiceClient.getOrderByUserId(userId);
 //        } catch (Exception e) {
 //            log.error(e.getMessage());
 //        }
-        
+
         /* Using ErrorDecoder */
         List<OrderResponse> orders = orderServiceClient.getOrderByUserId(userId);
 

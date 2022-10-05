@@ -25,7 +25,7 @@ public class WebConfig {
     }
 
     @Bean
-    public FeignErrorDecoder getFeignErrorDecoder() {
+    public FeignErrorDecoder getFeignErrorDecoder(){
         return new FeignErrorDecoder();
     }
 }
