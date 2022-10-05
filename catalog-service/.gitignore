@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### application.yml
+/Users/kimtaekang/Desktop/study/springMSA/user-service/src/main/resources/application.yml

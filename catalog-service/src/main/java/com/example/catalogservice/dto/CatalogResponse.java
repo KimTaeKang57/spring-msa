@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 public class CatalogResponse implements Serializable {
     private String productId;
-    private String productName;
+//    private String productName;
     private Integer qty;
     private Integer unitPrice;
     private Integer totalPrice;

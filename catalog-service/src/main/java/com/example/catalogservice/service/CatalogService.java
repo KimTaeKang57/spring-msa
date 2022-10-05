@@ -9,4 +9,6 @@ import java.util.List;
 public interface CatalogService {
 
     List<CatalogResponse> getAll();
+
+    void minusCatalog(String productName, Integer qty);
 }

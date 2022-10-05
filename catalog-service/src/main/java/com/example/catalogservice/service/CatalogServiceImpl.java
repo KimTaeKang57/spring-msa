@@ -6,6 +6,7 @@ import com.example.catalogservice.repository.CatalogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +23,17 @@ public class CatalogServiceImpl implements CatalogService {
         for (Catalog catalog : allCatalog) {
             catalogs.add(CatalogResponse.builder()
                     .productId(catalog.getProductId())
-                    .productName(catalog.getProductName())
+//                    .productName(catalog.getProductName())
                     .unitPrice(catalog.getUnitPrice())
                     .build());
         }
         return catalogs;
+    }
+
+    @Transactional
+    @Override
+    public void minusCatalog(String productId, Integer qty) {
+        Catalog catalog = catalogRepository.findByProductId(productId);
+        catalog.updateStock(qty);
     }
 }
