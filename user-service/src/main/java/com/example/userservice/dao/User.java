@@ -14,16 +14,16 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     @GeneratedValue
-    @Column(name = "user_id")
+    @Column(name = "users_id")
     private Long id;
 
-    @Column(name = "user_userId")
+    @Column(name = "users_userId")
     private String userId;
-    @Column(name = "user_passwd")
+    @Column(name = "users_passwd")
     private String passwd;
 
-    @Column(name = "user_createDate")
+    @Column(name = "users_createDate")
     private LocalDateTime createAt;
-    @Column(name = "user_updateDate")
+    @Column(name = "users_updateDate")
     private LocalDateTime updateAt;
 }
