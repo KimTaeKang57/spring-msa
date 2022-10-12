@@ -18,8 +18,8 @@ public class OrderResponse {
     private Integer unitPrice;
     private Integer totalPrice;
 
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+//    private LocalDateTime createAt;
+//    private LocalDateTime updateAt;
 
     private Long orderId;
     private Long userId;

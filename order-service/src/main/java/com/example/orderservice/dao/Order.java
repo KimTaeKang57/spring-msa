@@ -27,6 +27,6 @@ public class Order implements Serializable {
 
     private Long userId;
 
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+//    private LocalDateTime createAt;
+//    private LocalDateTime updateAt;
 }

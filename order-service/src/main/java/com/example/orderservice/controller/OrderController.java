@@ -2,6 +2,7 @@ package com.example.orderservice.controller;
 
 import com.example.orderservice.dto.OrderRequest;
 import com.example.orderservice.dto.OrderResponse;
+import com.example.orderservice.messagequeue.KafkaProducer;
 import com.example.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
@@ -16,6 +17,7 @@ import java.util.List;
 public class OrderController {
     private final Environment env;
     private final OrderService orderService;
+    private final KafkaProducer kafkaProducer;
 
     @GetMapping("/health_check")
     public String status() {
@@ -32,6 +34,9 @@ public class OrderController {
     public ResponseEntity<?> createOrder(@PathVariable("userId") Long userId,
                                          @RequestBody OrderRequest orderRequest) {
         OrderResponse order = orderService.createOrder(userId, orderRequest);
+
+        /* send this order to the kafka */
+        kafkaProducer.send("catalog-topic", order);
         return ResponseEntity.ok(order);
     }
 

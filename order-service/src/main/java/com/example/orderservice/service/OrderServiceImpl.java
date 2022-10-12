@@ -25,19 +25,19 @@ public class OrderServiceImpl implements OrderService {
                 .qty(orderRequest.getQty())
                 .unitPrice(orderRequest.getUnitPrice())
                 .totalPrice(orderRequest.getQty() * orderRequest.getUnitPrice())
-                .createAt(LocalDateTime.now())
+//                .createAt(LocalDateTime.now())
                 .userId(userId)
                 .build());
 
-        catalogServiceClient.buyCatalog(orderRequest.getProductId(), orderRequest.getQty());
+//        catalogServiceClient.buyCatalog(orderRequest.getProductId(), orderRequest.getQty());
 
         return OrderResponse.builder()
                 .productId(order.getProductId())
                 .qty(order.getQty())
                 .unitPrice(order.getUnitPrice())
                 .totalPrice(order.getTotalPrice())
-                .createAt(order.getCreateAt())
-                .updateAt(order.getUpdateAt())
+//                .createAt(order.getCreateAt())
+//                .updateAt(order.getUpdateAt())
                 .userId(order.getUserId())
                 .orderId(order.getId())
                 .build();
@@ -52,8 +52,8 @@ public class OrderServiceImpl implements OrderService {
                 .qty(order.getQty())
                 .unitPrice(order.getUnitPrice())
                 .totalPrice(order.getTotalPrice())
-                .createAt(order.getCreateAt())
-                .updateAt(order.getUpdateAt())
+//                .createAt(order.getCreateAt())
+//                .updateAt(order.getUpdateAt())
                 .userId(order.getUserId())
                 .orderId(order.getId())
                 .build();
@@ -69,8 +69,8 @@ public class OrderServiceImpl implements OrderService {
                     .qty(order.getQty())
                     .unitPrice(order.getUnitPrice())
                     .totalPrice(order.getTotalPrice())
-                    .createAt(order.getCreateAt())
-                    .updateAt(order.getUpdateAt())
+//                    .createAt(order.getCreateAt())
+//                    .updateAt(order.getUpdateAt())
                     .userId(order.getUserId())
                     .orderId(order.getId())
                     .build());
