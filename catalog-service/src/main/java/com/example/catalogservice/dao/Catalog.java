@@ -28,10 +28,12 @@ public class Catalog implements Serializable {
     private LocalDateTime updateAt;
 
     //== 비즈니스 로직 ==//
-    public void updateStock(Integer stock){
-        if (this.stock - stock < 0) {
-            throw new RuntimeException("재고가 부족합니다.");
+    public void setStock(Integer stock){
+        if(stock < 0){
+            throw new RuntimeException(String.format(
+                    "재고가 없습니다"
+            ));
         }
-        this.stock -= stock;
+        this.stock = stock;
     }
 }

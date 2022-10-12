@@ -34,6 +34,6 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     public void minusCatalog(String productId, Integer qty) {
         Catalog catalog = catalogRepository.findByProductId(productId);
-        catalog.updateStock(qty);
+        catalog.setStock(qty);
     }
 }
