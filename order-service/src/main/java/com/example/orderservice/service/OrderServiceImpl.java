@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Service
@@ -27,6 +28,7 @@ public class OrderServiceImpl implements OrderService {
                 .totalPrice(orderRequest.getQty() * orderRequest.getUnitPrice())
 //                .createAt(LocalDateTime.now())
                 .userId(userId)
+                .orderId(UUID.randomUUID().toString())
                 .build());
 
 //        catalogServiceClient.buyCatalog(orderRequest.getProductId(), orderRequest.getQty());
@@ -39,13 +41,13 @@ public class OrderServiceImpl implements OrderService {
 //                .createAt(order.getCreateAt())
 //                .updateAt(order.getUpdateAt())
                 .userId(order.getUserId())
-                .orderId(order.getId())
+                .orderId(order.getOrderId())
                 .build();
     }
 
     @Override
-    public OrderResponse getOrderByOrderId(Long orderId) {
-        Order order = orderRepository.findById(orderId).orElseThrow(NullPointerException::new);
+    public OrderResponse getOrderByOrderId(String orderId) {
+        Order order = orderRepository.findByOrderId(orderId);
 
         return OrderResponse.builder()
                 .productId(order.getProductId())
@@ -55,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
 //                .createAt(order.getCreateAt())
 //                .updateAt(order.getUpdateAt())
                 .userId(order.getUserId())
-                .orderId(order.getId())
+                .orderId(UUID.randomUUID().toString())
                 .build();
     }
 
@@ -72,7 +74,7 @@ public class OrderServiceImpl implements OrderService {
 //                    .createAt(order.getCreateAt())
 //                    .updateAt(order.getUpdateAt())
                     .userId(order.getUserId())
-                    .orderId(order.getId())
+                    .orderId(UUID.randomUUID().toString())
                     .build());
         }
 

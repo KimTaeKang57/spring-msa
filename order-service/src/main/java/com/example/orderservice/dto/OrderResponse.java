@@ -21,6 +21,6 @@ public class OrderResponse {
 //    private LocalDateTime createAt;
 //    private LocalDateTime updateAt;
 
-    private Long orderId;
+    private String orderId;
     private Long userId;
 }
