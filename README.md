@@ -17,15 +17,15 @@ MSA를 사용한 CI/CD 개발
 ### Kafka -> Spring Kafka의 message Queuing 서비스를 활용하여 각각의 서비스 데이터베이스 동기화
 #### 문제 1 : 주문내역을 생성할 때 해당 상품의 재고가 감소해야 함
 ##### Kafka의 Producers / Consumer 기능을 사용하였음
-- Producers
+##### Producers
 * 메시지 송신 API, 특정 Topic에 해당하는 메시지를 생성하는 프로세스, 메시지를 Broker에 전달(발생/Publish)
 * Producers는 데이터를 그들이 선택한 Topic 으로 publish 한다
 
-- Consumer
+##### Consumer
 * 메시지 수신 API
 * Broker에게서 구독(Subscribe)하는 Topic의 메시지를 가져와 사용하는 프로세스
 
-- Broker
+##### Broker
 * 토픽을 기준으로 메세지 관리
 * Producers와 Consumer가 만날 수 있도록 메세지를 관리하는 서버 클러스터, Producers에게서 전달받은 메세지를 Topic별로 분류한다.
 
@@ -33,13 +33,13 @@ MSA를 사용한 CI/CD 개발
 
 #### 문제 2 : 각각의 서비스는 독립적으로 존재하는데 같은 서비스가 동시에 작업 중일 때 각각 다른 데이터베이스를 사용하여 데이터베이스가 분리되는 문제
 ##### Kafka의 Connect와 Sink Connector 기능을 사용하였음
-- Connect
+##### Connect
 * Connector를 동작하게 하는 프로세서 (서버)
 
-- Source Connector
+##### Source Connector
 * data source에 담긴 데이터를 topic에 담는 역할(Producer)을 하는 connector
 
-- Sink Connector
+##### Sink Connector
 * Topic에 담긴 데이터를 특정 data source로 보내는 역할(Consumer 역할)을 하는 connector
 
 ##### 같은 Order-service 지만 동시에 실행되고 있을 때 요청이 오면 각각의 데이터베이스에 데이터가 저장되어 하나의 같은 서비스임에도 같은 데이터베이스를 사용하지 않는 문제가 발생
