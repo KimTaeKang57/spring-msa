@@ -32,9 +32,6 @@ MSA를 사용한 CI/CD 개발
 <img width="1395" alt="스크린샷 2022-10-13 오후 8 11 19" src="https://user-images.githubusercontent.com/83891837/195581641-47b04aaa-d44b-4d6f-94ec-2649a9759f2b.png">
 
 #### 문제 2 : 각각의 서비스는 독립적으로 존재하는데 같은 서비스가 동시에 작업 중일 때 각각 다른 데이터베이스를 사용하여 데이터베이스가 분리되는 문제
-- 같은 Order-service 지만 동시에 실행되고 있을 때 요청이 오면 각각의 데이터베이스에 데이터가 저장되어 하나의 같은 서비스임에도 같은 데이터베이스를 사용하지 않는 문제가 발생
-<img width="687" alt="스크린샷 2022-10-13 오후 8 16 20" src="https://user-images.githubusercontent.com/83891837/195582546-1c7172b3-6d02-4fcf-9fed-d47af675bfb0.png">
-
 ##### Kafka의 Connect와 Sink Connector 기능을 사용하였음
 - Connect
 * Connector를 동작하게 하는 프로세서 (서버)
@@ -45,6 +42,9 @@ MSA를 사용한 CI/CD 개발
 - Sink Connector
 * Topic에 담긴 데이터를 특정 data source로 보내는 역할(Consumer 역할)을 하는 connector
 
-- Message Queuing을 진행하며 하나의 서비스에서 주문이 생성되면 다른 서비스에 Topic을 전달하여 하나의 데이터베이스에 주문내역이 저장되게 한다.
+##### 같은 Order-service 지만 동시에 실행되고 있을 때 요청이 오면 각각의 데이터베이스에 데이터가 저장되어 하나의 같은 서비스임에도 같은 데이터베이스를 사용하지 않는 문제가 발생
+<img width="687" alt="스크린샷 2022-10-13 오후 8 16 20" src="https://user-images.githubusercontent.com/83891837/195582546-1c7172b3-6d02-4fcf-9fed-d47af675bfb0.png">
+
+##### Message Queuing을 진행하며 하나의 서비스에서 주문이 생성되면 다른 서비스에 Topic을 전달하여 하나의 데이터베이스에 주문내역이 저장되게 한다.
 
 <img width="1131" alt="스크린샷 2022-10-13 오후 8 35 03" src="https://user-images.githubusercontent.com/83891837/195585904-cbd4c5ba-a092-4664-9b89-f73f451be983.png">
