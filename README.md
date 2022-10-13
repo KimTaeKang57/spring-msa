@@ -45,6 +45,6 @@ MSA를 사용한 CI/CD 개발
 - Sink Connector
 * Topic에 담긴 데이터를 특정 data source로 보내는 역할(Consumer 역할)을 하는 connector
 
-- Message Queuing을 진행하며 하나의 서비스에서 주문이 
+- Message Queuing을 진행하며 하나의 서비스에서 주문이 생성되면 다른 서비스에 Topic을 전달하여 하나의 데이터베이스에 주문내역이 저장되게 한다.
 
 <img width="1131" alt="스크린샷 2022-10-13 오후 8 35 03" src="https://user-images.githubusercontent.com/83891837/195585904-cbd4c5ba-a092-4664-9b89-f73f451be983.png">
