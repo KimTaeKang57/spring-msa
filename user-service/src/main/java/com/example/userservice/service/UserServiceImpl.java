@@ -9,6 +9,8 @@ import com.example.userservice.error.FeignErrorDecoder;
 import com.example.userservice.jpa.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final OrderServiceClient orderServiceClient;
     private final FeignErrorDecoder feignErrorDecoder;
+    private final CircuitBreakerFactory circuitBreakerFactory;
 
     @Override
     public UserResponse sign(UserRequest userRequest) {
@@ -97,7 +100,13 @@ public class UserServiceImpl implements UserService {
 //        }
 
         /* Using ErrorDecoder */
-        List<OrderResponse> orders = orderServiceClient.getOrderByUserId(userId);
+//        List<OrderResponse> orders = orderServiceClient.getOrderByUserId(userId);
+
+        /* Using CircuitBreaker */
+        CircuitBreaker circuitbreaker = circuitBreakerFactory.create("circuitbreaker");
+        // 만약 오류가 발생할 경우엔 빈 ArrayList를 출력해준다.
+        List<OrderResponse> orders = circuitbreaker.run(() -> orderServiceClient.getOrderByUserId(userId),
+                throwable -> new ArrayList<>());
 
         return UserResponse.builder()
                 .userId(user.getUserId())
