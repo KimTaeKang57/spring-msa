@@ -2,8 +2,6 @@ package com.example.orderservice.controller;
 
 import com.example.orderservice.dto.OrderRequest;
 import com.example.orderservice.dto.OrderResponse;
-import com.example.orderservice.messagequeue.KafkaProducer;
-import com.example.orderservice.messagequeue.OrderProducer;
 import com.example.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
