@@ -31,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
                 .orderId(UUID.randomUUID().toString())
                 .build());
 
-//        catalogServiceClient.buyCatalog(orderRequest.getProductId(), orderRequest.getQty());
+        catalogServiceClient.buyCatalog(orderRequest.getProductId(), orderRequest.getQty());
 
         return OrderResponse.builder()
                 .productId(order.getProductId())

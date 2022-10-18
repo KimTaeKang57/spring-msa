@@ -19,8 +19,8 @@ import java.util.UUID;
 public class OrderController {
     private final Environment env;
     private final OrderService orderService;
-    private final KafkaProducer kafkaProducer;
-    private final OrderProducer orderProducer;
+//    private final KafkaProducer kafkaProducer;
+//    private final OrderProducer orderProducer;
 
     @GetMapping("/health_check")
     public String status() {
@@ -51,8 +51,8 @@ public class OrderController {
 //                .build();
 
         /* send this order to the kafka */
-        kafkaProducer.send("catalog-topic", order);
-        orderProducer.send("orders", order);
+//        kafkaProducer.send("catalog-topic", order);
+//        orderProducer.send("orders", order);
 
         return ResponseEntity.ok(order);
     }
