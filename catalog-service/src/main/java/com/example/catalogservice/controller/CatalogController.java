@@ -1,5 +1,6 @@
 package com.example.catalogservice.controller;
 
+import com.example.catalogservice.dto.CatalogRequest;
 import com.example.catalogservice.dto.CatalogResponse;
 import com.example.catalogservice.service.CatalogService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,12 @@ public class CatalogController {
     public ResponseEntity<?> getAllCatalog() {
         List<CatalogResponse> list = catalogService.getAll();
         return ResponseEntity.ok(list);
+    }
+
+    @PostMapping("/catalogs/save")
+    public ResponseEntity<?> makeCatalog(@RequestBody CatalogRequest catalogRequest) {
+        CatalogResponse catalogResponse = catalogService.createCatalog(catalogRequest);
+        return ResponseEntity.ok(catalogResponse);
     }
 
     @PostMapping("/catalogs/{productId}/{qty}")

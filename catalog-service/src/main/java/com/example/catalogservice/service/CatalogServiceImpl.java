@@ -1,6 +1,7 @@
 package com.example.catalogservice.service;
 
 import com.example.catalogservice.dao.Catalog;
+import com.example.catalogservice.dto.CatalogRequest;
 import com.example.catalogservice.dto.CatalogResponse;
 import com.example.catalogservice.repository.CatalogRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -35,5 +37,21 @@ public class CatalogServiceImpl implements CatalogService {
     public void minusCatalog(String productId, Integer qty) {
         Catalog catalog = catalogRepository.findByProductId(productId);
         catalog.setStock(qty);
+    }
+
+    @Override
+    public CatalogResponse createCatalog(CatalogRequest catalogRequest) {
+        Catalog catalog = catalogRepository.save(Catalog.builder()
+                .productId(catalogRequest.getProductId())
+                .stock(catalogRequest.getQty())
+                .unitPrice(catalogRequest.getUnitPrice())
+                .build());
+
+        return CatalogResponse.builder()
+                .productId(catalog.getProductId())
+                .qty(catalog.getStock())
+                .unitPrice(catalog.getUnitPrice())
+                .totalPrice(catalog.getUnitPrice() * catalog.getStock())
+                .build();
     }
 }

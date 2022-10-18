@@ -12,16 +12,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Getter
-public class CatalogResponse implements Serializable {
+public class CatalogRequest implements Serializable {
     private String productId;
-//    private String productName;
     private Integer qty;
     private Integer unitPrice;
-    private Integer totalPrice;
-//
-//    private Long orderId;
-//    private Long userId;
-//
-//    private LocalDateTime createAt;
-//    private LocalDateTime updateAt;
 }
